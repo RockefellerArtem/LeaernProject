@@ -7,12 +7,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _powerSwing;
     
-    private HingeJoint2D _palyerJoint;
     private Rigidbody2D _palyerBody;
 
     private void Start()
     {
-        _palyerJoint = GetComponent<HingeJoint2D>();
         _palyerBody = GetComponent<Rigidbody2D>();
         
         SwiningPlayer();
@@ -22,14 +20,28 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            _palyerJoint.connectedBody = null;
-            _palyerJoint.enabled = false;
             _endRope.connectedBody = null;
             _endRope.enabled = false;
         }
     }
 
-    private void SwiningPlayer() => _palyerBody.AddForce(transform.right * _powerSwing);
-    
-    
+    private void SwiningPlayer()
+    {
+        _palyerBody.AddRelativeForce(Vector2.right * _powerSwing, ForceMode2D.Impulse);
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.TryGetComponent<HingeJoint2D>(out HingeJoint2D rope))
+        {
+            rope.connectedBody = _palyerBody;
+            rope.enabled = true;
+            _endRope = rope;
+            transform.position = rope.transform.position;
+            //transform.rotation = rope.transform.rotation;
+            _palyerBody.velocity = Vector2.zero;
+            _palyerBody.angularVelocity = 0;
+        }
+    }
 }
