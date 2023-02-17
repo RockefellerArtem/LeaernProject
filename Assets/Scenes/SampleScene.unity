@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _endRope: {fileID: 1356994665}
+  _powerSwing: 200
 --- !u!1 &310753838
 GameObject:
   m_ObjectHideFlags: 0

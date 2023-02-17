@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private HingeJoint2D _endRope;
+
+    [SerializeField] private float _powerSwing;
     
     private HingeJoint2D _palyerJoint;
     private Rigidbody2D _palyerBody;
@@ -13,7 +15,7 @@ public class PlayerController : MonoBehaviour
         _palyerJoint = GetComponent<HingeJoint2D>();
         _palyerBody = GetComponent<Rigidbody2D>();
         
-        //SwiningPlayer();
+        SwiningPlayer();
     }
 
     private void Update()
@@ -25,21 +27,9 @@ public class PlayerController : MonoBehaviour
             _endRope.connectedBody = null;
             _endRope.enabled = false;
         }
-        //SwiningPlayer();
-        //Debug.Log(_palyerBody.angularVelocity);
     }
 
-    private void SwiningPlayer()
-    {
-        bool isActive = true;
-        while (isActive)
-        {
-            _palyerBody.angularDrag += 1;
-            if(_palyerBody.angularDrag > 5)
-            {
-                isActive = false;
-            }
-        }
-        
-    }
+    private void SwiningPlayer() => _palyerBody.AddForce(transform.right * _powerSwing);
+    
+    
 }
