@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
             rope.enabled = true;
             _endRope = rope;
             transform.position = rope.transform.position;
-            //transform.rotation = rope.transform.rotation;
             _palyerBody.velocity = Vector2.zero;
             _palyerBody.angularVelocity = 0;
         }
